@@ -1,0 +1,78 @@
+class.cpanelEmailMgr.php
+========================
+
+author:     Bryce Mickler <bryce@brycemickler.com>
+version:    1.0
+copyright:  2009
+license:    http://www.freebsd.org/copyright/freebsd-license.html Free BSD License
+download:   http://github.com/bmickler/cPanelEmailAccountManager
+
+This class provides methods to create and delete email accounts by using cPanel's
+built-in functionality.
+
+This class is based on the scripts authored by Md. Zakir Hossain (Raju) 
+(http://www.rajuru.xenexbd.com) which, in-turn, were based on the scripts from
+http://www.zubrag.com/scripts/cpanel-create-email-account.php.
+
+
+USAGE EXAMPLE
+=============
+
+[begin file]  example.php
+
+<code>
+
+<?php
+
+require_once('class.cPanelEmail.php');
+
+$args['cpUser'] = 		'username';  	// Your cPanel username
+$args['cpPassword'] = 	'pass12345';  	// Your cPanel password
+$args['cpDomain'] = 		'example.com';  // Your domain name (sans the www.)
+$args['cpSkin'] = 		'x3';  			// Skin version of your cPanel install
+$args['useHttps'] = 		true;  			// Whether or not to use https://
+
+$cPanelEmailMgr = new cPanelEmailMgr($args);
+
+//  Create 'testuser@example.com' with a mailbox diskspace quota of 20MB
+if(!$cPanelEmailMgr->createAccount('test','example.com',20)) {
+	die('could not create account');
+}
+
+//  Delete the 'testuser@example.com' email account
+if(!$cPanelEmailMgr->deleteAccount('test','example.com')) {
+	die('could not delete account');
+}
+
+?>
+
+</code>
+
+[end file]
+
+
+REQUIREMENTS
+=============
+
+- PHP5 or greater
+- PHP must not be running in safe mode
+
+RECOMMENDATIONS
+===============
+
+- It is recommended that $args['useHttps'] be set to TRUE;
+
+FAQ's
+=====
+
+Q: 'What skin should I choose?', 
+A:  check out this article: http://www.zubrag.com/articles/determine-cpanel-skin.php
+
+Q: 'Where can I get more help with this class?',
+A:  http://www.brycemickler.com/forums/
+
+
+TO DO
+=====
+
+todo verify that this works with cPanel skins other than x, x2, and x3
